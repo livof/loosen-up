@@ -87,8 +87,23 @@ function renderHome() {
 // ---------- Beep ----------
 let audio = null;
 
+// Phones only allow sound after a tap, so this runs on Start and on every player button.
+// Playing a silent sound inside the tap is what actually unlocks audio on iOS.
+function unlockAudio() {
+  if (!audio) {
+    try { audio = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return; }
+    const src = audio.createBufferSource();
+    src.buffer = audio.createBuffer(1, 1, 22050);
+    src.connect(audio.destination);
+    src.start(0);
+  }
+  if (audio.state !== 'running') audio.resume().catch(() => {});
+}
+
 function beep() {
+  if (navigator.vibrate) navigator.vibrate(200); // Android; iPhones ignore this
   if (!audio) return;
+  if (audio.state !== 'running') audio.resume().catch(() => {});
   const osc = audio.createOscillator();
   const gain = audio.createGain();
   osc.frequency.value = 880;
@@ -112,11 +127,32 @@ function show(id) {
   window.scrollTo(0, 0);
 }
 
+// ---------- Keep the screen on ----------
+// If the phone screen locks, the browser freezes the timer, so it never moves on.
+let wakeLock = null;
+
+async function keepAwake() {
+  if (!('wakeLock' in navigator) || wakeLock) return;
+  try {
+    wakeLock = await navigator.wakeLock.request('screen');
+    wakeLock.addEventListener('release', () => { wakeLock = null; });
+    if ($('player').hidden) allowSleep(); // session ended while we were waiting
+  } catch (e) { wakeLock = null; }
+}
+
+function allowSleep() {
+  if (wakeLock) wakeLock.release();
+  wakeLock = null;
+}
+
+// The phone drops the wake lock when you switch apps; take it back on return.
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && !$('player').hidden) keepAwake();
+});
+
 function startSession() {
-  // Audio must be created on a tap (browser rule, especially iOS).
-  if (!audio) {
-    try { audio = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { audio = null; }
-  }
+  unlockAudio();
+  keepAwake();
   routine = buildRoutine(choice);
   paused = false;
   show('player');
@@ -131,13 +167,13 @@ function goToStep(n) {
 }
 
 function run() {
-  endsAt = Date.now() + remainingMs;
+  endsAt = performance.now() + remainingMs;
   clearInterval(timer);
   timer = setInterval(tick, 200);
 }
 
 function tick() {
-  remainingMs = endsAt - Date.now();
+  remainingMs = endsAt - performance.now();
   if (remainingMs <= 0) {
     nextStep();
     return;
@@ -161,7 +197,7 @@ function togglePause() {
   } else {
     paused = true;
     clearInterval(timer);
-    remainingMs = endsAt - Date.now();
+    remainingMs = endsAt - performance.now();
   }
   $('pause').textContent = paused ? 'Resume' : 'Pause';
 }
@@ -178,12 +214,16 @@ function renderStep() {
   $('photo').classList.toggle('mirror', step.phase === 'Right side');
   if (s.photo) {
     // Only reset the images when the stretch changes, so the flip animation doesn't restart.
-    const a = photoSrc(s, 0);
+    // A still (s.still) has only one picture, the end frame, so nothing flips.
+    const a = photoSrc(s, s.still ? 1 : 0);
     if (!$('photo-a').src.endsWith(a)) {
       $('photo-a').src = a;
-      $('photo-b').src = photoSrc(s, 1);
-      $('photo-a').alt = `${s.name}: start position`;
-      $('photo-b').alt = `${s.name}: end position`;
+      $('photo-a').alt = s.still ? s.name : `${s.name}: start position`;
+      $('photo-b').hidden = !!s.still;
+      if (!s.still) {
+        $('photo-b').src = photoSrc(s, 1);
+        $('photo-b').alt = `${s.name}: end position`;
+      }
     }
   }
   $('pause').textContent = paused ? 'Resume' : 'Pause';
@@ -196,7 +236,7 @@ function renderStep() {
   else $('next').textContent = 'Last one';
 
   if (nextStretch && nextStretch.stretch.photo) {
-    [0, 1].forEach(f => { new Image().src = photoSrc(nextStretch.stretch, f); });
+    (nextStretch.stretch.still ? [1] : [0, 1]).forEach(f => { new Image().src = photoSrc(nextStretch.stretch, f); });
   }
 
   renderClock();
@@ -212,6 +252,7 @@ function renderClock() {
 function stopTimer() {
   clearInterval(timer);
   timer = null;
+  allowSleep();
 }
 
 function finish() {
@@ -227,7 +268,10 @@ $('pause').addEventListener('click', togglePause);
 $('skip').addEventListener('click', nextStep);
 $('back').addEventListener('click', () => { if (stepIndex > 0) goToStep(stepIndex - 1); });
 $('quit').addEventListener('click', () => { stopTimer(); show('home'); });
+['pause', 'skip', 'back'].forEach(id => $(id).addEventListener('click', unlockAudio));
 $('again').addEventListener('click', () => show('home'));
+// Opening the video leaves the page; pause so you don't miss stretches while watching.
+$('video').addEventListener('click', () => { if (!paused) togglePause(); });
 
 // Space bar pauses/resumes on a laptop.
 document.addEventListener('keydown', e => {

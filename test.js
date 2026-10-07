@@ -40,11 +40,11 @@ for (const g of GOALS) {
   }
 }
 
-// Every stretch must have both picture frames in img/.
+// Every stretch must have both picture frames in img/ (only the end frame if it's a still).
 const fs = require('fs');
 for (const s of STRETCHES) {
   const ext = s.photo === 'drawing' ? 'svg' : 'jpg';
-  for (const f of [0, 1]) {
+  for (const f of s.still ? [1] : [0, 1]) {
     if (!s.photo || !fs.existsSync(`${__dirname}/img/${s.id}-${f}.${ext}`)) {
       failures++;
       console.log(`FAIL missing img/${s.id}-${f}.${ext}`);

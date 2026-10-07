@@ -32,4 +32,5 @@ Edit `STRETCHES` in `routines.js`. The order of that list is the order stretches
 To use it in a goal, add its `id` to that goal's `stretches` list (most important first).
 Every stretch needs a picture: add `img/<id>-0.jpg` (start) and `img/<id>-1.jpg` (end) and set `photo` to the source name,
 or draw it in `tools/draw-figures.js` and set `photo: 'drawing'`.
+If the movement is too small to show as two pictures, set `still: true` and add only the `-1` picture.
 Run `node test.js` afterwards.

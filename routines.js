@@ -32,7 +32,7 @@ const STRETCHES = [
     how: 'Sit or lie comfortably. Breathe in through your nose for 4, out slowly for 6. Let your belly rise.' },
   { id: 'shoulder-rolls', name: 'Shoulder rolls', kind: 'mobility', areas: ['shoulders', 'neck'], photo: 'Shoulder_Circles', secs: 30,
     how: 'Roll your shoulders up, back and down in slow big circles.' },
-  { id: 'chin-tucks', name: 'Chin tucks', kind: 'mobility', areas: ['neck'], photo: 'drawing', secs: 30,
+  { id: 'chin-tucks', name: 'Chin tucks', kind: 'mobility', areas: ['neck'], photo: 'drawing', still: true, secs: 30,
     how: 'Slide your chin straight back (make a double chin), hold 3 seconds, release. Repeat.' },
   { id: 'side-neck', name: 'Side neck stretch', kind: 'static', areas: ['neck', 'shoulders'], photo: 'Side_Neck_Stretch', secs: 30, sides: true,
     how: 'Tilt your ear towards your shoulder. Keep the other shoulder down. A hand on your head adds a light pull.' },

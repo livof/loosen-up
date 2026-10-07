@@ -23,7 +23,8 @@ Phone, tablet and laptop, at any screen size, in any modern browser.
    - what comes next
    - overall progress
 4. **Controls**: Start/Pause · Skip · Back
-5. A **beep** plays when switching to the next stretch or side.
+5. A **beep** plays when switching to the next stretch or side (plus a buzz on phones that support it).
+   The screen stays on during a session, so the timer keeps running on a phone.
 6. A **done** screen appears at the end.
 
 ## Stretch content
@@ -72,7 +73,7 @@ if you feel numbness, tingling, or pain that spreads or gets worse.
 - History or streaks
 - Break reminders
 - Accounts or sync
-- Voice, vibration, keeping the screen awake
+- Voice
 - Illustrations or videos
 - Building your own custom routine
 - Other languages

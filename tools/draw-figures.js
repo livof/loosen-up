@@ -1,4 +1,4 @@
-// Generates simple 2-frame SVG figures for stretches without photos.
+// Generates simple 2-frame (or 1 still) SVG figures for stretches without photos.
 // Run: node tools/draw-figures.js img
 const fs = require('fs');
 const out = process.argv[2];
@@ -40,14 +40,14 @@ const drawings = {
       line([[150, 134], [150, 70]], false) + head(150, 46) +
       line([[150, 74], [118, 98], [140, 114]], false) + line([[150, 74], [182, 98], [160, 114]], false) + belly;
   }),
-  // Side view of head and neck: head forward, then chin slid straight back.
-  'chin-tucks': [0, 1].map(f => {
-    const hx = f ? 150 : 170;
+  // Side view of head and neck, one still picture: faded head forward, solid head with chin slid back.
+  // The movement is too small to read as a flip, so this stretch has no start frame.
+  'chin-tucks': [(() => {
     const guide = `<line x1="150" y1="20" x2="150" y2="180" stroke="${ACC}" stroke-width="3" stroke-dasharray="6 6" opacity=".6"/>`;
-    return guide + line([[150, 112], [150, 180]], false) + line([[150, 112], [hx, 66]], false) +
-      `<circle cx="${hx}" cy="44" r="22" fill="${NEAR}"/><circle cx="${hx + 22}" cy="46" r="5" fill="${NEAR}"/>` +
-      (f ? '' : arrow(196, 12, 166, 12));
-  }),
+    const neck = (hx, far) => line([[150, 112], [hx, 66]], far) +
+      `<circle cx="${hx}" cy="44" r="22" fill="${far ? FAR : NEAR}"/><circle cx="${hx + 22}" cy="46" r="5" fill="${far ? FAR : NEAR}"/>`;
+    return guide + line([[150, 112], [150, 180]], false) + neck(176, true) + neck(150, false) + arrow(204, 12, 172, 12);
+  })()],
   // Seen from above: lying on your side, knees bent. Top arm sweeps open.
   'open-book': [0, 1].map(f => {
     const legs = line([[190, 100], [222, 142], [262, 128]], true) + line([[190, 100], [226, 136], [266, 120]], false);
@@ -70,7 +70,8 @@ const drawings = {
 for (const [id, frames] of Object.entries(drawings)) {
   frames.forEach((body, f) => {
     const ground = id === 'chin-tucks' || id === 'open-book' ? '' : floor();
-    fs.writeFileSync(`${out}/${id}-${f}.svg`, svg(body, defs + ground));
+    const frame = frames.length === 1 ? 1 : f; // a single still picture is the end frame
+    fs.writeFileSync(`${out}/${id}-${frame}.svg`, svg(body, defs + ground));
   });
 }
-console.log('wrote', Object.keys(drawings).length * 2, 'svgs');
+console.log('wrote', Object.values(drawings).flat().length, 'svgs');
