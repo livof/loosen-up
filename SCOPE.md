@@ -115,8 +115,8 @@ Added because I'm very visual and want to see how each stretch is done.
 - Each stretch starts with a **5-second "Get ready"**, which counts towards the total time.
 - If a routine is still short, it's padded with **belly breathing at the start**
   (or **march in place** for the run warm-up).
-- Area routines first repeat the stretches for those areas (up to 3 rounds), then fill the rest
-  with general full-body stretches.
+- Area routines use the stretches for those areas, plus general full-body stretches when there's
+  room. If there's still time left, only the area stretches repeat (up to 3 times each).
 
 ## Still out of scope
 
