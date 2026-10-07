@@ -85,3 +85,40 @@ if you feel numbness, tingling, or pain that spreads or gets worse.
 - The timer runs start to finish with pause, skip and back working, and with no console errors.
 - The layout works at phone width (360 px) up to desktop.
 - The app is live on GitHub Pages and the README contains the link.
+
+---
+
+# v2: Visuals
+
+Added because I'm very visual and want to see how each stretch is done.
+
+## What's in v2
+
+- **Photos for 18 of 25 stretches**, from [free-exercise-db](https://github.com/yuhonas/free-exercise-db)
+  (public domain). Each has a start and an end photo, and the player crossfades between them every
+  few seconds like a slow GIF. On right-side steps the photo is mirrored.
+- Photos are stored in the repo (`img/<stretch-id>-0.jpg` / `-1.jpg`, about 1.4 MB in total),
+  so the app doesn't depend on another site.
+- **"Watch a video ↗"** on every stretch opens a YouTube search for it. This also covers the
+  7 stretches without a photo (march, butt kicks, high knees, belly breathing, chin tucks,
+  open book, legs up the wall).
+- **Thumbnails** in the routine preview on the start screen.
+- Some stretches were changed to match the available photos:
+  - Doorway chest stretch → **Chest opener** (no door needed)
+  - Hip circles → circling a lifted knee, per side
+  - Lying twist and lying hamstring → solo versions (the dataset's versions use a partner)
+  - Seated twist → hands behind the head
+- Credit for the photos is shown on the start screen and in the README.
+
+## Decisions made while building v1 (recorded here)
+
+- Each stretch starts with a **5-second "Get ready"**, which counts towards the total time.
+- If a routine is still short, it's padded with **belly breathing at the start**
+  (or **march in place** for the run warm-up).
+- Area routines first repeat the stretches for those areas (up to 3 rounds), then fill the rest
+  with general full-body stretches.
+
+## Still out of scope
+
+The v1 "later" list still applies: keeping the screen awake, history, reminders, voice, custom
+routines, other languages and a body map.

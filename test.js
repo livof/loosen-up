@@ -40,5 +40,16 @@ for (const g of GOALS) {
   }
 }
 
+// Every stretch with a photo must have both frames in img/.
+const fs = require('fs');
+for (const s of STRETCHES.filter(s => s.photo)) {
+  for (const f of [0, 1]) {
+    if (!fs.existsSync(`${__dirname}/img/${s.id}-${f}.jpg`)) {
+      failures++;
+      console.log(`FAIL missing img/${s.id}-${f}.jpg`);
+    }
+  }
+}
+
 console.log(failures ? `${failures} failure(s)` : 'All checks passed');
 process.exit(failures ? 1 : 0);

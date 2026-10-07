@@ -11,6 +11,7 @@ Scope and decisions: [SCOPE.md](SCOPE.md)
 - `index.html`: the page
 - `style.css`: styles (light/dark follows your device)
 - `routines.js`: stretch library, goals and the routine builder
+- `img/`: start/end photos per stretch, from [free-exercise-db](https://github.com/yuhonas/free-exercise-db) (public domain)
 - `app.js`: screens and the timer
 - `test.js`: checks every goal/area combination fits each length
 
@@ -28,4 +29,5 @@ node test.js
 
 Edit `STRETCHES` in `routines.js`. The order of that list is the order stretches play in.
 To use it in a goal, add its `id` to that goal's `stretches` list (most important first).
+For a photo, add `img/<id>-0.jpg` (start) and `img/<id>-1.jpg` (end) and set `photo` to the source name.
 Run `node test.js` afterwards.

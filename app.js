@@ -43,6 +43,15 @@ LENGTHS.forEach(m => {
   $('lengths').append(b);
 });
 
+// Photos come in pairs: start (0) and end (1) position.
+function photoSrc(s, frame) {
+  return `img/${s.id}-${frame}.jpg`;
+}
+
+function videoUrl(s) {
+  return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(`how to do ${s.name} stretch`);
+}
+
 function hasChoice() {
   return choice.goal || choice.areas.length > 0;
 }
@@ -66,7 +75,10 @@ function renderHome() {
     return;
   }
   const r = buildRoutine(choice);
-  const items = r.stretches.map(s => `<li>${s.name}</li>`).join('');
+  const items = r.stretches.map(s => {
+    const thumb = s.photo ? `<img src="${photoSrc(s, 1)}" alt="" loading="lazy">` : '<span class="no-photo"></span>';
+    return `<li>${thumb}<span>${s.name}</span></li>`;
+  }).join('');
   $('preview').innerHTML =
     `<strong>${r.stretches.length} stretches · ${formatTime(r.total)}</strong><ol>${items}</ol>`;
 }
@@ -160,6 +172,19 @@ function renderStep() {
   $('phase').textContent = step.phase === 'prep' ? 'Get ready' : step.phase;
   $('name').textContent = s.name;
   $('how').textContent = s.how;
+  $('video').href = videoUrl(s);
+  $('photo').hidden = !s.photo;
+  $('photo').classList.toggle('mirror', step.phase === 'Right side');
+  if (s.photo) {
+    // Only reset the images when the stretch changes, so the flip animation doesn't restart.
+    const a = photoSrc(s, 0);
+    if (!$('photo-a').src.endsWith(a)) {
+      $('photo-a').src = a;
+      $('photo-b').src = photoSrc(s, 1);
+      $('photo-a').alt = `${s.name}: start position`;
+      $('photo-b').alt = `${s.name}: end position`;
+    }
+  }
   $('pause').textContent = paused ? 'Resume' : 'Pause';
   $('back').disabled = stepIndex === 0;
 
@@ -168,6 +193,10 @@ function renderStep() {
   if (following && following.index === step.index && step.phase === 'Left side') $('next').textContent = 'Next: Right side';
   else if (nextStretch) $('next').textContent = `Up next: ${nextStretch.stretch.name}`;
   else $('next').textContent = 'Last one';
+
+  if (nextStretch && nextStretch.stretch.photo) {
+    [0, 1].forEach(f => { new Image().src = photoSrc(nextStretch.stretch, f); });
+  }
 
   renderClock();
 }
