@@ -43,9 +43,10 @@ LENGTHS.forEach(m => {
   $('lengths').append(b);
 });
 
-// Photos come in pairs: start (0) and end (1) position.
+// Pictures come in pairs: start (0) and end (1) position.
+// Photos are .jpg; our own drawings (photo: 'drawing') are .svg.
 function photoSrc(s, frame) {
-  return `img/${s.id}-${frame}.jpg`;
+  return `img/${s.id}-${frame}.${s.photo === 'drawing' ? 'svg' : 'jpg'}`;
 }
 
 function videoUrl(s) {

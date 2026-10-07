@@ -9,7 +9,7 @@ const MAX_ROUNDS = 3;  // max times a focus stretch repeats
 // (run warm-ups gentle -> active, then everything else top -> bottom).
 // kind: "warmup" (dynamic, for runs) | "mobility" (moving) | "static" (hold) | "breath"
 const STRETCHES = [
-  { id: 'march', name: 'March in place', kind: 'warmup', areas: ['legs'], secs: 30,
+  { id: 'march', name: 'March in place', kind: 'warmup', areas: ['legs'], photo: 'drawing', secs: 30,
     how: 'March on the spot, lifting your knees and swinging your arms. Keep it easy.' },
   { id: 'arm-circles', name: 'Arm circles', kind: 'warmup', areas: ['shoulders'], photo: 'Arm_Circles', secs: 30,
     how: 'Arms out to the sides. Make circles, small to big, then reverse.' },
@@ -23,16 +23,16 @@ const STRETCHES = [
     how: 'Hold a chair or wall. Swing one leg out to the side, then across in front of the standing leg.' },
   { id: 'walking-lunges', name: 'Walking lunges', kind: 'warmup', areas: ['hips', 'legs'], photo: 'Bodyweight_Walking_Lunge', secs: 45,
     how: 'Step forward into a lunge, back knee towards the floor, then step through. Alternate legs.' },
-  { id: 'butt-kicks', name: 'Butt kicks', kind: 'warmup', areas: ['legs'], secs: 30,
+  { id: 'butt-kicks', name: 'Butt kicks', kind: 'warmup', areas: ['legs'], photo: 'drawing', secs: 30,
     how: 'Jog on the spot, bringing your heels up towards your bum.' },
-  { id: 'high-knees', name: 'High knees', kind: 'warmup', areas: ['hips', 'legs'], secs: 30,
+  { id: 'high-knees', name: 'High knees', kind: 'warmup', areas: ['hips', 'legs'], photo: 'drawing', secs: 30,
     how: 'Jog on the spot, driving your knees up to hip height. Light and quick.' },
 
-  { id: 'breathing', name: 'Belly breathing', kind: 'breath', areas: [], secs: 60,
+  { id: 'breathing', name: 'Belly breathing', kind: 'breath', areas: [], photo: 'drawing', secs: 60,
     how: 'Sit or lie comfortably. Breathe in through your nose for 4, out slowly for 6. Let your belly rise.' },
   { id: 'shoulder-rolls', name: 'Shoulder rolls', kind: 'mobility', areas: ['shoulders', 'neck'], photo: 'Shoulder_Circles', secs: 30,
     how: 'Roll your shoulders up, back and down in slow big circles.' },
-  { id: 'chin-tucks', name: 'Chin tucks', kind: 'mobility', areas: ['neck'], secs: 30,
+  { id: 'chin-tucks', name: 'Chin tucks', kind: 'mobility', areas: ['neck'], photo: 'drawing', secs: 30,
     how: 'Slide your chin straight back (make a double chin), hold 3 seconds, release. Repeat.' },
   { id: 'side-neck', name: 'Side neck stretch', kind: 'static', areas: ['neck', 'shoulders'], photo: 'Side_Neck_Stretch', secs: 30, sides: true,
     how: 'Tilt your ear towards your shoulder. Keep the other shoulder down. A hand on your head adds a light pull.' },
@@ -40,7 +40,7 @@ const STRETCHES = [
     how: 'Stand tall, arms straight out in front. Sweep them wide open and squeeze your shoulder blades together. Return slowly and repeat.' },
   { id: 'seated-twist', name: 'Seated twist', kind: 'static', areas: ['upperBack', 'lowerBack'], photo: 'Spinal_Stretch', secs: 30, sides: true,
     how: 'Sit tall, fingers behind your head, elbows wide. Turn your upper body to one side and hold. Grow taller as you breathe in.' },
-  { id: 'open-book', name: 'Open book', kind: 'mobility', areas: ['upperBack', 'shoulders'], secs: 40, sides: true,
+  { id: 'open-book', name: 'Open book', kind: 'mobility', areas: ['upperBack', 'shoulders'], photo: 'drawing', secs: 40, sides: true,
     how: 'Lie on your side, knees bent, arms forward. Sweep the top arm open across your body, eyes follow. Return slowly.' },
   { id: 'back-extension', name: 'Standing back extension', kind: 'mobility', areas: ['lowerBack'], photo: 'Elbows_Back', secs: 30,
     how: 'Stand, hands on your lower back. Gently lean back, then return. Repeat slowly.' },
@@ -58,7 +58,7 @@ const STRETCHES = [
     how: 'Lie on your back. Hold behind one thigh and straighten that leg towards the ceiling. Keep the other leg relaxed on the floor.' },
   { id: 'calf', name: 'Wall calf stretch', kind: 'static', areas: ['legs'], photo: 'Calf_Stretch_Hands_Against_Wall', secs: 30, sides: true,
     how: 'Hands on a wall, one foot back, heel down, back leg straight. Lean in until you feel the calf.' },
-  { id: 'legs-up-wall', name: 'Legs up the wall', kind: 'static', areas: ['legs', 'lowerBack'], secs: 60,
+  { id: 'legs-up-wall', name: 'Legs up the wall', kind: 'static', areas: ['legs', 'lowerBack'], photo: 'drawing', secs: 60,
     how: 'Lie with your bum near a wall and rest your legs up it. Arms relaxed. Slow your breathing.' },
 ];
 

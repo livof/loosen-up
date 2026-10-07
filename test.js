@@ -40,13 +40,14 @@ for (const g of GOALS) {
   }
 }
 
-// Every stretch with a photo must have both frames in img/.
+// Every stretch must have both picture frames in img/.
 const fs = require('fs');
-for (const s of STRETCHES.filter(s => s.photo)) {
+for (const s of STRETCHES) {
+  const ext = s.photo === 'drawing' ? 'svg' : 'jpg';
   for (const f of [0, 1]) {
-    if (!fs.existsSync(`${__dirname}/img/${s.id}-${f}.jpg`)) {
+    if (!s.photo || !fs.existsSync(`${__dirname}/img/${s.id}-${f}.${ext}`)) {
       failures++;
-      console.log(`FAIL missing img/${s.id}-${f}.jpg`);
+      console.log(`FAIL missing img/${s.id}-${f}.${ext}`);
     }
   }
 }
