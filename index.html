@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Loosen Up</title>
+  <meta name="description" content="A guided stretch timer. Pick what you need, pick your time, follow along.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧘</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <section id="home">
+      <h1>Loosen Up</h1>
+      <p class="lede">Pick what you need, pick your time, follow along.</p>
+
+      <h2>What do you need?</h2>
+      <div class="goals" id="goals"></div>
+
+      <h2>…or focus on areas</h2>
+      <div class="chips" id="areas"></div>
+
+      <h2>How long?</h2>
+      <div class="lengths" id="lengths"></div>
+
+      <div class="preview" id="preview"></div>
+
+      <button class="primary wide" id="start" disabled>Start</button>
+
+      <p class="safety">Stretch to mild tension, never pain. Don't bounce. Stop and see a professional
+        if you feel numbness, tingling, or pain that spreads or gets worse.</p>
+    </section>
+
+    <section id="player" hidden>
+      <div class="bar"><div class="bar-fill" id="bar-fill"></div></div>
+      <p class="muted" id="count"></p>
+      <p class="phase" id="phase"></p>
+      <h2 class="name" id="name"></h2>
+      <p class="how" id="how"></p>
+      <div class="clock" id="clock" aria-live="off"></div>
+      <p class="muted" id="next"></p>
+      <div class="controls">
+        <button id="back" aria-label="Previous step">Back</button>
+        <button class="primary" id="pause">Pause</button>
+        <button id="skip" aria-label="Next step">Skip</button>
+      </div>
+      <button class="link" id="quit">End session</button>
+    </section>
+
+    <section id="done" hidden>
+      <h1>Nice work</h1>
+      <p class="lede" id="done-text"></p>
+      <button class="primary wide" id="again">Back to start</button>
+    </section>
+  </main>
+
+  <script src="routines.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
