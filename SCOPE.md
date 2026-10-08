@@ -230,3 +230,25 @@ Photos from free-exercise-db where one fits; drawings for the rest.
 - Pigeon pose (popular with runners, but hard on beginners' knees; figure-4 does the same job)
 - Sun salutation as a moving flow (it goes standing → floor → standing, which breaks the position grouping)
 - More variety day to day (routines are the same each time for a given choice)
+
+---
+
+# v5: A quiet room
+
+A redesign so the pause feels like being at home, not in a gym app.
+The previous version is tagged **`v4-goals-voice`**.
+
+- **Palette**: warm linen and clay, with soft sage as the one accent. Dark mode is an evening,
+  lamp-lit room (warm charcoal, not blue-black). Soft light falls in from the top of the page.
+- **Type**: Fraunces (soft serif) for headings, names and the clock; Nunito (rounded sans) for text.
+  Loaded from Google Fonts; if they don't load, it falls back to Georgia / system fonts.
+- **Greeting by time of day** ("Good morning · Ease into the day") and a **"good for now"** tag on the goal
+  that fits the hour: morning → Morning wake-up, weekday daytime → Sitting too much,
+  evening → Daily stretch, late → Wind down. Only a hint, nothing is preselected.
+- **Goal pebbles**: each goal has its own soft colour (clay, sand, lavender, sun, dusk, sage, wood).
+- **Player**: the clock sits in a **ring that empties** as the step runs. On breathing steps the ring
+  **breathes**: it grows over 4 s on the in-breath and settles over 6 s on the out-breath.
+- **Photos** get a gentle warm tone so the gym pictures match the room; drawings use the same palette.
+- **Done**: a rising sun and a kind line that changes each time.
+- Softer shapes everywhere (rounded cards, pill buttons, gentle shadows); "Start" became "Begin".
+- Reduced-motion settings turn off the breathing ring, the sun and button animations.

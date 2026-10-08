@@ -1,24 +1,34 @@
+/* A quiet room in morning light: warm linen, soft sage, rounded shapes, nothing loud. */
 :root {
-  --bg: #f6f5f1;
-  --surface: #ffffff;
-  --text: #1f2523;
-  --muted: #5f6a66;
-  --border: #d9ddd8;
-  --accent: #2f7d68;
-  --accent-text: #ffffff;
-  --accent-soft: #dcefe8;
+  --bg: #f4efe7;
+  --bg-glow: #fbe9cf;
+  --surface: #fbf8f3;
+  --text: #2f2a24;
+  --muted: #7a6f63;
+  --border: #e4dacd;
+  --accent: #557a5a;
+  --accent-text: #fbf8f3;
+  --accent-soft: #e4ebdc;
+  --shadow: 0 1px 2px rgba(80, 60, 30, 0.06), 0 6px 20px rgba(80, 60, 30, 0.06);
+  --serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --sans: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light;
 }
 
+/* Evening: a lamp-lit room. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #141917;
-    --surface: #1d2421;
-    --text: #e8ece9;
-    --muted: #9aa6a1;
-    --border: #33403b;
-    --accent: #5cc0a2;
-    --accent-text: #0f1513;
-    --accent-soft: #23372f;
+    --bg: #1c1915;
+    --bg-glow: #3a2c1c;
+    --surface: #26221d;
+    --text: #f0e8dc;
+    --muted: #b0a493;
+    --border: #3a342c;
+    --accent: #a9c79c;
+    --accent-text: #1c1915;
+    --accent-soft: #2f3829;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.25);
+    color-scheme: dark;
   }
 }
 
@@ -26,19 +36,33 @@
 
 body {
   margin: 0;
-  background: var(--bg);
+  min-height: 100vh;
   color: var(--text);
-  font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font: 17px/1.55 var(--sans);
+  background-color: var(--bg);
+  /* Soft light falling in from the top, like a window. */
+  background-image: radial-gradient(ellipse 120% 60% at 50% -10%, var(--bg-glow), transparent 70%);
+  background-repeat: no-repeat;
+  -webkit-font-smoothing: antialiased;
 }
 
 main {
   max-width: 560px;
   margin: 0 auto;
-  padding: 24px 16px 48px;
+  padding: 32px 16px 56px;
 }
 
-h1 { font-size: 2rem; margin: 0 0 4px; }
-h2 { font-size: 1rem; margin: 28px 0 10px; }
+h1, h2, .name, .clock { font-family: var(--serif); font-optical-sizing: auto; }
+h1 { font-size: 2.3rem; font-weight: 500; line-height: 1.15; margin: 0 0 6px; letter-spacing: -0.01em; }
+h2 { font-size: 1.12rem; font-weight: 500; margin: 32px 0 12px; }
+.greeting {
+  margin: 0 0 4px;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 .lede { color: var(--muted); margin: 0; }
 .muted { color: var(--muted); margin: 0; }
 
@@ -47,43 +71,82 @@ button {
   color: var(--text);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 18px;
   min-height: 48px;
-  padding: 10px 16px;
+  padding: 12px 16px;
   cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: background-color 0.25s, border-color 0.25s, transform 0.15s;
 }
+button:active:not(:disabled) { transform: scale(0.98); }
 button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 button[aria-pressed="true"] {
   background: var(--accent-soft);
   border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
 }
 button.primary {
   background: var(--accent);
   border-color: var(--accent);
   color: var(--accent-text);
-  font-weight: 600;
+  font-weight: 700;
+  border-radius: 999px;
 }
-button:disabled { opacity: 0.45; cursor: not-allowed; }
-button.wide { width: 100%; margin-top: 20px; }
+button:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+button.wide { width: 100%; margin-top: 24px; min-height: 56px; font-size: 1.05rem; }
 button.link {
   border: none;
   background: none;
+  box-shadow: none;
   color: var(--muted);
   text-decoration: underline;
-  margin: 24px auto 0;
+  text-underline-offset: 3px;
+  margin: 16px auto 0;
   display: block;
 }
 
+/* Goal cards: each one has its own pebble of colour. */
 .goals {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 10px;
 }
-.goals button { text-align: left; }
-.goals small { display: block; color: var(--muted); font-size: 0.85rem; }
+.goals button {
+  text-align: left;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-weight: 600;
+}
+.goals small { display: block; color: var(--muted); font-size: 0.85rem; font-weight: 400; }
+.pebble {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 46% 54% 52% 48% / 55% 45% 55% 45%;
+  background: var(--pebble, var(--accent-soft));
+}
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  vertical-align: 2px;
+}
+[data-goal="run"]      { --pebble: linear-gradient(135deg, #e8a47c, #c9714f); }
+[data-goal="afterrun"] { --pebble: linear-gradient(135deg, #e9c99a, #c99a62); }
+[data-goal="yoga"]     { --pebble: linear-gradient(135deg, #c8b6dc, #9a86b8); }
+[data-goal="morning"]  { --pebble: linear-gradient(135deg, #f5d98a, #e3ac4c); }
+[data-goal="winddown"] { --pebble: linear-gradient(135deg, #a9bcd6, #6f86a8); }
+[data-goal="sitting"]  { --pebble: linear-gradient(135deg, #b9d0ad, #7a9a6e); }
+[data-goal="daily"]    { --pebble: linear-gradient(135deg, #d9c6b2, #a88b70); }
 
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.chips button { border-radius: 999px; }
+.chips button { border-radius: 999px; padding: 10px 18px; }
 
 .lengths {
   display: grid;
@@ -91,53 +154,65 @@ button.link {
   grid-auto-columns: 1fr;
   gap: 8px;
 }
+.lengths button { padding: 10px 4px; white-space: nowrap; font-weight: 600; }
 [hidden] { display: none !important; }
 
+/* The routine preview: a calm list on a card. */
 .preview {
-  margin-top: 24px;
+  margin-top: 28px;
   color: var(--muted);
   font-size: 0.95rem;
 }
-.preview strong { color: var(--text); }
-.preview ol { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
-.preview li { display: flex; align-items: center; gap: 10px; }
-.preview li small { display: block; font-size: 0.8rem; }
+.preview:not(:empty) {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+.preview strong { color: var(--text); font-family: var(--serif); font-weight: 500; font-size: 1.05rem; }
+.preview ol { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.preview li { display: flex; align-items: center; gap: 12px; color: var(--text); }
+.preview li small { display: block; font-size: 0.8rem; color: var(--muted); }
 .preview li img, .preview .no-photo {
-  width: 54px;
-  height: 36px;
+  width: 56px;
+  height: 40px;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 10px;
   flex: none;
   background: var(--border);
 }
-.safety a { color: inherit; }
 
 .safety {
-  margin-top: 24px;
+  margin-top: 28px;
   font-size: 0.85rem;
   color: var(--muted);
 }
+.safety a { color: inherit; }
+
+/* Gym photos get a warmer tone so they belong in the room. */
+.photo img[src$=".jpg"], .preview img[src$=".jpg"] { filter: sepia(0.18) saturate(0.85) brightness(1.02); }
 
 /* Player */
 #player { text-align: center; }
 .bar {
-  height: 6px;
+  height: 4px;
   background: var(--border);
   border-radius: 999px;
   overflow: hidden;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
-.bar-fill { height: 100%; width: 0; background: var(--accent); }
+.bar-fill { height: 100%; width: 0; background: var(--accent); border-radius: 999px; transition: width 0.3s linear; }
 .photo {
   position: relative;
   aspect-ratio: 3 / 2;
   max-width: 420px;
-  margin: 8px auto 0;
-  border-radius: 14px;
+  margin: 10px auto 0;
+  border-radius: 26px;
   overflow: hidden;
   background: var(--border);
+  box-shadow: var(--shadow);
 }
-.photo[hidden] { display: none; }
 .photo.mirror img { transform: scaleX(-1); } /* show the other side */
 .photo img {
   position: absolute;
@@ -153,36 +228,85 @@ button.link {
   50%, 90% { opacity: 1; }
   100% { opacity: 0; }
 }
-@media (prefers-reduced-motion: reduce) {
-  #photo-b { animation-duration: 8s; }
-}
 .video {
   display: inline-block;
   margin-top: 6px;
   color: var(--accent);
   font-size: 0.9rem;
+  text-underline-offset: 3px;
 }
 .phase {
-  margin: 16px 0 0;
+  display: inline-block;
+  margin: 18px 0 0;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: var(--accent-soft);
   color: var(--accent);
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
 }
-.name { font-size: 1.6rem; margin: 6px 0 8px; }
-.how { margin: 0 auto; max-width: 42ch; }
+.phase:empty { display: none; }
+.name { font-size: 1.75rem; font-weight: 500; line-height: 1.2; margin: 8px 0 8px; }
+.how { margin: 0 auto; max-width: 40ch; }
+
+/* The clock sits in a ring that empties as the step runs.
+   On breathing steps the ring grows as you breathe in (4 s) and settles as you breathe out (6 s). */
+.clock-wrap {
+  position: relative;
+  width: 190px;
+  height: 190px;
+  margin: 18px auto 6px;
+  display: grid;
+  place-items: center;
+  transition: transform 1s ease-in-out;
+}
+.clock-wrap[data-breath="in"]  { transform: scale(1.1);  transition-duration: 4s; }
+.clock-wrap[data-breath="out"] { transform: scale(0.92); transition-duration: 6s; }
+.ring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring circle { fill: none; stroke-width: 5; }
+.ring-bg { stroke: var(--border); fill: var(--surface) !important; }
+.ring-fill {
+  stroke: var(--accent);
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  transition: stroke-dashoffset 0.25s linear;
+}
 .clock {
-  font-size: clamp(3.5rem, 18vw, 6rem);
-  font-weight: 700;
+  position: relative;
+  font-size: 3.4rem;
+  font-weight: 400;
   font-variant-numeric: tabular-nums;
   line-height: 1;
-  margin: 16px 0 8px;
 }
 .controls {
   display: grid;
   grid-template-columns: 1fr 1.4fr 1fr;
   gap: 10px;
-  margin-top: 24px;
+  margin-top: 22px;
 }
-.lengths button { padding: 10px 4px; white-space: nowrap; }
+
+/* Done: a warm sun and a kind word. */
+#done { text-align: center; padding-top: 40px; }
+.sun {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #fbe3a8, #eeb36a 60%, #dd8e58);
+  box-shadow: 0 0 0 18px rgba(238, 179, 106, 0.16), 0 0 0 40px rgba(238, 179, 106, 0.08);
+  animation: rise 1.6s ease-out both;
+}
+@keyframes rise {
+  from { transform: translateY(24px) scale(0.9); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+.kind { font-family: var(--serif); font-style: italic; font-size: 1.15rem; margin: 18px auto 0; max-width: 32ch; }
+
+@media (prefers-reduced-motion: reduce) {
+  #photo-b { animation-duration: 8s; }
+  .clock-wrap, .clock-wrap[data-breath] { transform: none; transition: none; }
+  .sun { animation: none; }
+  button { transition: none; }
+}

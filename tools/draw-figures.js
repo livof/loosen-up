@@ -2,11 +2,11 @@
 // Run: node tools/draw-figures.js img
 const fs = require('fs');
 const out = process.argv[2];
-const NEAR = '#2b3431', FAR = '#98a39e', ACC = '#2f7d68';
+const NEAR = '#3a342d', FAR = '#aaa196', ACC = '#557a5a';
 const line = (pts, far) => `<polyline points="${pts.map(p => p.join(',')).join(' ')}" fill="none" stroke="${far ? FAR : NEAR}" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>`;
 const head = (x, y, far) => `<circle cx="${x}" cy="${y}" r="15" fill="${far ? FAR : NEAR}"/>`;
-const svg = (body, extra = '') => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"><rect width="300" height="200" fill="#ece8e1"/>${extra}${body}</svg>\n`;
-const floor = (y = 182) => `<rect y="${y}" width="300" height="${200 - y}" fill="#d6cfc3"/>`;
+const svg = (body, extra = '') => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"><rect width="300" height="200" fill="#f3ede4"/>${extra}${body}</svg>\n`;
+const floor = (y = 182) => `<rect y="${y}" width="300" height="${200 - y}" fill="#e3d8c8"/>`;
 const arrow = (x1, y1, x2, y2) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${ACC}" stroke-width="5" stroke-linecap="round" marker-end="url(#a)"/>`;
 const defs = `<defs><marker id="a" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="${ACC}"/></marker></defs>`;
 
@@ -18,7 +18,7 @@ function stander({ farLeg, nearLeg, farArm, nearArm, lean = 0 }) {
     line([hip, ...nearLeg], false) + line([sh, ...nearArm], false);
 }
 // Side view, sitting on a chair, facing right. spine: points from the hip up to the shoulder.
-const CHAIR = '#b9b0a3';
+const CHAIR = '#c9b49c';
 const chair = `<rect x="106" y="128" width="64" height="7" rx="3" fill="${CHAIR}"/>` +
   `<rect x="106" y="70" width="7" height="112" rx="3" fill="${CHAIR}"/><rect x="163" y="128" width="7" height="54" rx="3" fill="${CHAIR}"/>`;
 const hipS = [138, 122];
@@ -70,7 +70,7 @@ const drawings = {
   }),
   // Lying on your back, legs resting up a wall.
   'legs-up-wall': [0, 1].map(f => {
-    const wall = `<rect x="232" y="0" width="68" height="200" fill="#d6cfc3"/>`;
+    const wall = `<rect x="232" y="0" width="68" height="200" fill="#e3d8c8"/>`;
     const arms = f
       ? line([[100, 168], [86, 140], [64, 132]], false)
       : line([[100, 168], [126, 144], [150, 158]], false);
@@ -147,7 +147,7 @@ const drawings = {
     line([[92, 170], [136, 176]], false)],
   // Sitting, looking up and far away out of a window. One still picture.
   'eye-break': [(() => {
-    const window = `<rect x="226" y="30" width="58" height="70" rx="4" fill="#cfe1dc" stroke="${CHAIR}" stroke-width="5"/>` +
+    const window = `<rect x="226" y="30" width="58" height="70" rx="4" fill="#dfe8d6" stroke="${CHAIR}" stroke-width="5"/>` +
       `<line x1="255" y1="30" x2="255" y2="100" stroke="${CHAIR}" stroke-width="4"/>`;
     const gaze = `<line x1="156" y1="50" x2="236" y2="60" stroke="${ACC}" stroke-width="3" stroke-dasharray="6 6"/>`;
     return window + gaze + sitter({ farArm: [[150, 100], [168, 116]], nearArm: [[154, 98], [174, 118]] });

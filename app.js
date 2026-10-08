@@ -16,8 +16,21 @@ function makeButton(html, onClick) {
   return b;
 }
 
+// A warm hello that follows the time of day, and a hint at what fits right now.
+const hour = new Date().getHours();
+const weekday = new Date().getDay() % 6 !== 0;
+const moment =
+  hour < 5 ? { hello: 'Good night', welcome: 'A quiet moment before sleep', goal: 'winddown' }
+  : hour < 11 ? { hello: 'Good morning', welcome: 'Ease into the day', goal: 'morning' }
+  : hour < 17 ? { hello: 'Good afternoon', welcome: 'Time for a little pause', goal: weekday ? 'sitting' : 'daily' }
+  : hour < 21 ? { hello: 'Good evening', welcome: 'Let the day settle', goal: 'daily' }
+  : { hello: 'Good evening', welcome: 'Slow down, unwind', goal: 'winddown' };
+$('greeting').textContent = moment.hello;
+$('welcome').textContent = moment.welcome;
+
 GOALS.forEach(g => {
-  const b = makeButton(`${g.name}<small>${g.note}</small>`, () => {
+  const tag = g.id === moment.goal ? '<span class="tag">good for now</span>' : '';
+  const b = makeButton(`<span class="pebble"></span><span>${g.name}${tag}<small>${g.note}</small></span>`, () => {
     choice.goal = choice.goal === g.id ? null : g.id;
     choice.areas = [];
     renderHome();
@@ -39,7 +52,7 @@ AREAS.forEach(a => {
 });
 
 PLACES.forEach(p => {
-  const b = makeButton(`${p.name}<small>${p.note}</small>`, () => {
+  const b = makeButton(`<span>${p.name}<small>${p.note}</small></span>`, () => {
     choice.place = p.id;
     try { localStorage.setItem('place', p.id); } catch (e) { /* not saved, still works */ }
     renderHome();
@@ -310,8 +323,12 @@ function breathPhase(step) {
 function renderClock() {
   $('clock').textContent = formatTime(remainingMs / 1000);
   const step = routine.steps[stepIndex];
-  if (step.stretch.kind === 'breath' && step.phase !== 'prep') {
+  $('ring').style.strokeDashoffset = 100 - Math.max(0, remainingMs / 1000 / step.secs) * 100;
+  const breathing = step.stretch.kind === 'breath' && step.phase !== 'prep';
+  if (!breathing || paused) delete $('clock-wrap').dataset.breath;
+  if (breathing) {
     const text = breathPhase(step);
+    if (!paused) $('clock-wrap').dataset.breath = text === 'Breathe in' ? 'in' : 'out';
     if ($('phase').textContent !== text) {
       if (!paused && $('phase').textContent && remainingMs > 1000) say(text === 'Breathe in' ? 'In' : 'Out');
       $('phase').textContent = text;
@@ -328,12 +345,23 @@ function stopTimer() {
   allowSleep();
 }
 
+const KIND_WORDS = [
+  'Your body thanks you.',
+  'A few minutes for you. That counts.',
+  'Notice how you feel right now.',
+  'Small pauses add up.',
+  'Carry this calm into what comes next.',
+  'Well looked after.',
+  'Breathe. You made time for yourself.',
+];
+
 function finish() {
   stopTimer();
   beep();
   say('Done. Nice work.');
   $('done-text').textContent =
     `You did ${routine.stretches.length} stretches in ${formatTime(routine.total)}.`;
+  $('kind').textContent = KIND_WORDS[Math.floor(Math.random() * KIND_WORDS.length)];
   show('done');
 }
 
