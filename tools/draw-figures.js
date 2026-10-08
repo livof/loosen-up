@@ -109,6 +109,49 @@ const drawings = {
       line([[112, 136], [116, 175], [82, 176]], false)
     : line([[262, 176], [178, 174], [104, 172]], false) + head(84, 160) + line([[104, 172], [100, 176], [70, 177]], false) +
       arrow(130, 150, 130, 118)),
+  // Stand on one leg, hold the other foot behind you. Free arm out for balance.
+  'quad-standing': [0, 1].map(f => f
+    ? stander({ farLeg: standLeg, nearLeg: [[150, 148], [130, 122]], farArm: [[172, 80], [194, 74]], nearArm: [[140, 94], [130, 120]] })
+    : stander({ farLeg: standLeg, nearLeg: [[152, 148], [138, 158]], farArm: [[172, 80], [194, 74]], nearArm: [[144, 92], [140, 116]] })),
+  // From hands and knees, lift the hips up and back into an upside-down V.
+  'downward-dog': [0, 1].map(f => f
+    ? line([[124, 126], [88, 178]], true) + line([[170, 78], [214, 178]], true) + line([[124, 126], [170, 78]], false) +
+      head(118, 146) + line([[170, 78], [212, 178]], false) + line([[124, 126], [92, 178]], false)
+    : line([[110, 124], [104, 178]], true) + line([[190, 124], [190, 178], [236, 178]], true) + line([[110, 124], [190, 124]], false) +
+      head(88, 116) + line([[190, 124], [194, 178], [240, 178]], false) + line([[110, 124], [108, 178]], false) + arrow(190, 104, 176, 76)),
+  // Hands on the desk, walk back and hinge until your back is flat.
+  'desk-dog': [0, 1].map(f => {
+    const desk = `<rect x="222" y="104" width="78" height="8" rx="3" fill="${CHAIR}"/><rect x="226" y="112" width="7" height="70" fill="${CHAIR}"/>`;
+    return desk + (f
+      ? line([[118, 112], [118, 180]], true) + line([[118, 112], [186, 112]], false) + head(202, 130) +
+        line([[118, 112], [120, 180]], false) + line([[186, 112], [228, 102]], false)
+      : stander({ farLeg: standLeg, nearLeg: standLeg, farArm: [[188, 88], [226, 102]], nearArm: [[190, 90], [228, 102]] }) +
+        arrow(130, 30, 96, 30));
+  }),
+  // Front view. Wide stance, front knee bent over the ankle, arms out long.
+  'warrior-2': [0, 1].map(f => f
+    ? line([[150, 122], [104, 152], [86, 180]], false) + line([[150, 122], [194, 140], [200, 180]], false) +
+      line([[150, 122], [150, 74]], false) + head(150, 50) + line([[84, 74], [216, 74]], false)
+    : line([[150, 112], [118, 180]], false) + line([[150, 112], [182, 180]], false) +
+      line([[150, 112], [150, 66]], false) + head(150, 42) + line([[136, 108], [150, 66], [164, 108]], false)),
+  // On your back. Hug the knees in, then open them wide and hold the feet, soles up.
+  'happy-baby': [0, 1].map(f => {
+    const body = line([[96, 168], [170, 168]], false) + head(70, 164);
+    return f
+      ? body + line([[170, 168], [196, 132], [190, 92]], true) + line([[96, 168], [140, 130], [188, 94]], true) +
+        line([[170, 168], [146, 130], [176, 98]], false) + line([[96, 168], [134, 132], [174, 100]], false)
+      : body + line([[170, 168], [146, 120], [180, 116]], false) + line([[96, 168], [124, 136], [148, 124]], false) + arrow(204, 150, 204, 112);
+  }),
+  // Lying flat on your back, arms relaxed. One still picture.
+  savasana: [line([[92, 170], [130, 178]], true) + line([[92, 170], [176, 170], [262, 172]], false) + head(66, 164) +
+    line([[92, 170], [136, 176]], false)],
+  // Sitting, looking up and far away out of a window. One still picture.
+  'eye-break': [(() => {
+    const window = `<rect x="226" y="30" width="58" height="70" rx="4" fill="#cfe1dc" stroke="${CHAIR}" stroke-width="5"/>` +
+      `<line x1="255" y1="30" x2="255" y2="100" stroke="${CHAIR}" stroke-width="4"/>`;
+    const gaze = `<line x1="156" y1="50" x2="236" y2="60" stroke="${ACC}" stroke-width="3" stroke-dasharray="6 6"/>`;
+    return window + gaze + sitter({ farArm: [[150, 100], [168, 116]], nearArm: [[154, 98], [174, 118]] });
+  })()],
 };
 
 for (const [id, frames] of Object.entries(drawings)) {

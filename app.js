@@ -138,6 +138,39 @@ function beep() {
   osc.stop(audio.currentTime + 0.25);
 }
 
+// ---------- Voice ----------
+// Spoken cues, so you can follow along lying on the floor without looking at the screen.
+// Off by default (it's a surprise in an open office); remembered on this device.
+let voiceOn = false;
+try { voiceOn = localStorage.getItem('voice') === 'on'; } catch (e) { /* stays off */ }
+
+function say(text) {
+  if (!voiceOn || !window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+}
+
+function renderVoice() {
+  $('voice').hidden = !window.speechSynthesis;
+  $('voice').textContent = `Voice cues: ${voiceOn ? 'on' : 'off'}`;
+  $('voice').setAttribute('aria-pressed', voiceOn);
+}
+
+function toggleVoice() {
+  voiceOn = !voiceOn;
+  try { localStorage.setItem('voice', voiceOn ? 'on' : 'off'); } catch (e) { /* not saved */ }
+  renderVoice();
+  say(voiceOn ? 'Voice on' : '');
+}
+
+function cueFor(step) {
+  const s = step.stretch;
+  if (step.phase === 'prep') return `${s.name}. ${step.toFloor ? 'Down to the floor.' : 'Get ready.'}`;
+  if (step.phase === 'Right side') return 'Switch sides';
+  if (step.phase === 'Left side') return 'Left side';
+  return s.kind === 'breath' ? 'Breathe in' : 'Go';
+}
+
 // ---------- Player ----------
 let routine = null;
 let stepIndex = 0;
@@ -187,6 +220,7 @@ function goToStep(n) {
   stepIndex = n;
   remainingMs = routine.steps[n].secs * 1000;
   renderStep();
+  say(cueFor(routine.steps[n]));
   if (!paused) run();
 }
 
@@ -230,7 +264,7 @@ function renderStep() {
   const step = routine.steps[stepIndex];
   const s = step.stretch;
   $('count').textContent = `Stretch ${step.index + 1} of ${routine.stretches.length}`;
-  $('phase').textContent = step.phase !== 'prep' ? step.phase
+  $('phase').textContent = step.phase !== 'prep' ? (s.kind === 'breath' ? '' : step.phase)
     : step.toFloor ? 'Get ready: down to the floor' : 'Get ready';
   $('name').textContent = s.name;
   $('how').textContent = s.how;
@@ -267,8 +301,22 @@ function renderStep() {
   renderClock();
 }
 
+// Breathing steps pace you: in for 4, out for 6.
+function breathPhase(step) {
+  const elapsed = step.secs - remainingMs / 1000;
+  return elapsed % 10 < 4 ? 'Breathe in' : 'Breathe out';
+}
+
 function renderClock() {
   $('clock').textContent = formatTime(remainingMs / 1000);
+  const step = routine.steps[stepIndex];
+  if (step.stretch.kind === 'breath' && step.phase !== 'prep') {
+    const text = breathPhase(step);
+    if ($('phase').textContent !== text) {
+      if (!paused && $('phase').textContent && remainingMs > 1000) say(text === 'Breathe in' ? 'In' : 'Out');
+      $('phase').textContent = text;
+    }
+  }
   const done = routine.steps.slice(0, stepIndex).reduce((sum, st) => sum + st.secs, 0)
     + routine.steps[stepIndex].secs - remainingMs / 1000;
   $('bar-fill').style.width = `${Math.min(100, (done / routine.total) * 100)}%`;
@@ -283,6 +331,7 @@ function stopTimer() {
 function finish() {
   stopTimer();
   beep();
+  say('Done. Nice work.');
   $('done-text').textContent =
     `You did ${routine.stretches.length} stretches in ${formatTime(routine.total)}.`;
   show('done');
@@ -292,7 +341,8 @@ $('start').addEventListener('click', startSession);
 $('pause').addEventListener('click', togglePause);
 $('skip').addEventListener('click', nextStep);
 $('back').addEventListener('click', () => { if (stepIndex > 0) goToStep(stepIndex - 1); });
-$('quit').addEventListener('click', () => { stopTimer(); show('home'); });
+$('quit').addEventListener('click', () => { stopTimer(); say(''); show('home'); });
+$('voice').addEventListener('click', toggleVoice);
 ['pause', 'skip', 'back'].forEach(id => $(id).addEventListener('click', unlockAudio));
 $('again').addEventListener('click', () => show('home'));
 // Opening the video leaves the page; pause so you don't miss stretches while watching.
@@ -306,4 +356,5 @@ document.addEventListener('keydown', e => {
   }
 });
 
+renderVoice();
 renderHome();

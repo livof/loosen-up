@@ -34,6 +34,10 @@ for (const place of PLACES.map(p => p.id)) {
     for (const minutes of lengthsFor({ goal: g.id, place })) {
       const r = check(g.id, { goal: g.id, minutes, place });
       if (g.id === 'run' && r.stretches.some(s => s.kind === 'static')) fail(`run ${minutes} min contains static holds`);
+      if (g.id === 'afterrun' && r.stretches.some(s => s.kind === 'warmup')) fail(`afterrun ${minutes} min contains warm-ups`);
+      const end = r.stretches[r.stretches.length - 1].id;
+      const want = place === 'desk' ? 'breathing' : g.ending;
+      if (g.ending && minutes >= 5 && end !== want) fail(`${g.id} ${place} ${minutes} min ends with ${end}, not ${want}`);
     }
   }
 
@@ -46,7 +50,7 @@ for (const place of PLACES.map(p => p.id)) {
 
 // Every stretch id referenced by a goal must exist.
 for (const g of GOALS) {
-  for (const id of g.stretches.concat(g.filler)) {
+  for (const id of g.stretches.concat(g.filler, g.ending || [])) {
     if (!STRETCHES.some(s => s.id === id)) fail(`goal ${g.id} references missing stretch ${id}`);
   }
 }

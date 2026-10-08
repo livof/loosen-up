@@ -1,6 +1,6 @@
 # Loosen Up
 
-A guided stretch timer. Pick what you need (a goal or body areas), where you are (at your desk or at home), pick 2 / 5 / 10 / 15 minutes, press start and follow along.
+A guided stretch timer. Pick what you need (a goal or body areas), whether you can get down on the floor, pick 2 / 5 / 10 / 15 minutes, press start and follow along.
 
 **Live:** https://livof.github.io/loosen-up/
 

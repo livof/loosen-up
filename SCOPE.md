@@ -183,3 +183,50 @@ version up, and the body-area picker did the same.
 
 Break reminders ("time for a 2-min desk break") are the next most useful thing for office use,
 but still out of scope, along with the rest of the v1 "later" list.
+
+---
+
+# v4: More goals, voice and breathing
+
+Added without a separate approval round ("go nuts, as long as we can go back").
+The previous version is tagged **`v3-desk-home`**.
+Picked from what coaches, physios and yoga teachers most commonly recommend.
+Popularity and expert consensus count here, not only trials.
+
+## New goals
+
+| Goal | What's in it | Why |
+|---|---|---|
+| **After a run** | Static holds: calf, standing quad, standing hamstring, hip flexor, figure-4, then floor (twist, knee to chest, child's pose, happy baby, legs up the wall) | After running is where static holds belong. Without the floor it stays standing, for a park or a hallway |
+| **Beginner yoga** | Forward fold → warrior II → downward dog → cat–cow → child's pose → low lunge → sphinx → bridge → figure-4 → twist → happy baby → **savasana** | The poses most beginner classes are built on. With no floor it becomes chair yoga (desk dog, seated cat–cow, chair squats) |
+| **Morning wake-up** | Gentle moving: hip circles, world's greatest stretch, shoulder rolls, side bend, chest opener, forward fold, cat–cow, downward dog, bridge | Moving, not long holds, to wake the body up |
+
+- **Run warm-up**: added **world's greatest stretch** and **inchworms**, the two dynamic moves running coaches
+  use most. It stays dynamic only.
+- **Sitting too much**: added an **eye break** (the popular 20-20-20 rule) and downward dog (desk dog when there's no floor).
+- **Wind down** and **Beginner yoga** now always **end in savasana** from 5 minutes up
+  (breathing in a chair when there's no floor). Leftover time goes into the rest at the end.
+
+## New stretches
+
+Inchworms, world's greatest stretch, eye break, desk downward dog, standing forward fold,
+standing hamstring, warrior II, standing quad, downward dog, knee to chest, happy baby, savasana.
+Photos from free-exercise-db where one fits; drawings for the rest.
+
+## Player
+
+- **Voice cues** (off by default, remembered): says the stretch name, "Left side", "Switch sides",
+  "Down to the floor", and "In/Out" while breathing. For following along on the floor without the screen.
+- **Breathing pacer**: breathing steps show "Breathe in" (4 s) / "Breathe out" (6 s) instead of "Move".
+
+## Wording
+
+- "Where are you?" became **"Can you get down on the floor?"** (No floor / Floor is fine),
+  because the choice now also fits after a run outside, not only the office.
+
+## Ideas not done yet
+
+- Break reminders for desk workers
+- Pigeon pose (popular with runners, but hard on beginners' knees; figure-4 does the same job)
+- Sun salutation as a moving flow (it goes standing → floor → standing, which breaks the position grouping)
+- More variety day to day (routines are the same each time for a given choice)

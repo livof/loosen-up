@@ -26,6 +26,10 @@ const STRETCHES = [
     how: 'Hold a wall or something steady (not a chair on wheels). Swing one leg forward and back, letting the range grow. Stay tall.' },
   { id: 'side-leg-swings', name: 'Leg swings (side to side)', kind: 'warmup', pos: 'standing', areas: ['hips', 'legs'], photo: 'Side_Leg_Raises', secs: 30, sides: true,
     how: 'Hold a wall or something steady (not a chair on wheels). Swing one leg out to the side, then across in front of the standing leg.' },
+  { id: 'inchworm', name: 'Inchworms', kind: 'warmup', pos: 'standing', areas: ['legs', 'shoulders'], photo: 'Inchworm', secs: 40,
+    how: 'Stand, fold forward and put your hands down (bend your knees if needed). Walk your hands out to a plank, then walk them back and stand up. Repeat.' },
+  { id: 'worlds-greatest', name: "World's greatest stretch", kind: 'warmup', pos: 'standing', areas: ['hips', 'legs', 'upperBack'], photo: 'Worlds_Greatest_Stretch', secs: 30, sides: true,
+    how: 'Step into a long lunge, hands down inside the front foot. Drop the elbow towards the instep, then turn and reach that arm up to the sky. Step back and repeat.' },
   { id: 'walking-lunges', name: 'Walking lunges', kind: 'warmup', pos: 'standing', areas: ['hips', 'legs'], photo: 'Bodyweight_Walking_Lunge', secs: 45,
     how: 'Step forward into a lunge, back knee towards the floor, then step through. Alternate legs.' },
   { id: 'butt-kicks', name: 'Butt kicks', kind: 'warmup', pos: 'standing', areas: ['legs'], photo: 'drawing', secs: 30,
@@ -36,6 +40,8 @@ const STRETCHES = [
   // Chair
   { id: 'breathing', name: 'Belly breathing', kind: 'breath', pos: 'chair', areas: [], photo: 'drawing', secs: 60,
     how: 'Sit or lie comfortably. Breathe in through your nose for 4, out slowly for 6. Let your belly rise.' },
+  { id: 'eye-break', name: 'Eye break', kind: 'mobility', pos: 'chair', areas: [], photo: 'drawing', still: true, deskOnly: true, secs: 20,
+    how: 'Look away from the screen at something at least 6 metres away. Let your eyes go soft and blink slowly.' },
   { id: 'shoulder-rolls', name: 'Shoulder rolls', kind: 'mobility', pos: 'chair', areas: ['shoulders', 'neck'], photo: 'Shoulder_Circles', secs: 30,
     how: 'Roll your shoulders up, back and down in slow big circles.' },
   { id: 'chin-tucks', name: 'Chin tucks', kind: 'mobility', pos: 'chair', areas: ['neck'], photo: 'drawing', still: true, secs: 30,
@@ -60,16 +66,28 @@ const STRETCHES = [
   // Standing
   { id: 'chair-squats', name: 'Chair squats', kind: 'mobility', pos: 'standing', areas: ['hips', 'legs'], photo: 'Sit_Squats', deskOnly: true, secs: 30,
     how: 'Stand in front of your chair, feet hip-width. Sit back until you just touch the seat, then stand up tall and squeeze your bum. Slow and steady.' },
+  { id: 'desk-dog', name: 'Desk downward dog', kind: 'static', pos: 'standing', areas: ['shoulders', 'upperBack'], photo: 'drawing', deskOnly: true, secs: 30,
+    how: 'Hands on your desk, shoulder-width. Walk your feet back and hinge at your hips until your back is flat and your arms are by your ears. Let your chest sink.' },
   { id: 'chest-opener', name: 'Chest opener', kind: 'mobility', pos: 'standing', areas: ['shoulders', 'upperBack'], photo: 'Dynamic_Chest_Stretch', secs: 30,
     how: 'Stand tall, arms straight out in front. Sweep them wide open and squeeze your shoulder blades together. Return slowly and repeat.' },
   { id: 'back-extension', name: 'Standing back extension', kind: 'mobility', pos: 'standing', areas: ['lowerBack'], photo: 'Elbows_Back', secs: 30,
     how: 'Stand, hands on your lower back. Gently lean back, then return. Repeat slowly.' },
+  { id: 'forward-fold', name: 'Standing forward fold', kind: 'static', pos: 'standing', areas: ['legs', 'lowerBack'], photo: 'Standing_Toe_Touches', secs: 30,
+    how: 'Feet hip-width, knees soft. Fold forward from your hips and let your upper body hang heavy. Nod your head yes and no. Roll up slowly.' },
+  { id: 'standing-hamstring', name: 'Standing hamstring stretch', kind: 'static', pos: 'standing', areas: ['legs'], photo: 'Runners_Stretch', secs: 30, sides: true,
+    how: 'Step one foot forward, heel down, toes up. Bend the back knee, keep your back long and hinge forward until you feel the back of the front leg.' },
+  { id: 'warrior-2', name: 'Warrior II', kind: 'static', pos: 'standing', areas: ['hips', 'legs', 'shoulders'], photo: 'drawing', secs: 30, sides: true,
+    how: 'Wide stance, front toes forward, back foot turned out. Bend the front knee over the ankle. Arms out long at shoulder height, look over the front hand.' },
   { id: 'hip-flexor-standing', name: 'Standing hip flexor stretch', kind: 'static', pos: 'standing', areas: ['hips', 'lowerBack'], photo: 'Standing_Hip_Flexors', deskOnly: true, secs: 30, sides: true,
     how: 'Step one foot back, back heel up. Tuck your tailbone under, squeeze that bum cheek and bend your knees a little until you feel the front of the back hip.' },
+  { id: 'quad-standing', name: 'Standing quad stretch', kind: 'static', pos: 'standing', areas: ['legs', 'hips'], photo: 'drawing', secs: 30, sides: true,
+    how: 'Stand tall (hold a wall if needed). Bend one knee and hold that foot behind you. Knees together, tuck your tailbone under.' },
   { id: 'calf', name: 'Calf stretch', kind: 'static', pos: 'standing', areas: ['legs'], photo: 'Calf_Stretch_Hands_Against_Wall', secs: 30, sides: true,
     how: 'Hands on a wall or your desk, one foot back, heel down, back leg straight. Lean in until you feel the calf.' },
 
   // Floor (kneeling -> face down -> on your side -> on your back)
+  { id: 'downward-dog', name: 'Downward dog', kind: 'static', pos: 'floor', desk: 'desk-dog', areas: ['shoulders', 'legs', 'upperBack'], photo: 'drawing', secs: 30,
+    how: 'From hands and knees, tuck your toes and lift your hips up and back into an upside-down V. Knees can stay bent; a long back matters more than straight legs.' },
   { id: 'cat-cow', name: 'Cat–cow', kind: 'mobility', pos: 'floor', desk: 'seated-cat-cow', areas: ['upperBack', 'lowerBack'], photo: 'Cat_Stretch', secs: 45,
     how: 'On hands and knees. Breathe in and arch, breathe out and round your back. Move slowly.' },
   { id: 'childs-pose', name: "Child's pose", kind: 'static', pos: 'floor', areas: ['lowerBack', 'shoulders'], photo: 'Childs_Pose', secs: 60,
@@ -82,14 +100,20 @@ const STRETCHES = [
     how: 'Lie on your side, knees bent, arms forward. Sweep the top arm open across your body, eyes follow. Return slowly.' },
   { id: 'glute-bridge', name: 'Glute bridge', kind: 'mobility', pos: 'floor', desk: 'chair-squats', areas: ['hips', 'legs'], photo: 'Pelvic_Tilt_Into_Bridge', secs: 30,
     how: 'Lie on your back, knees bent, feet flat. Squeeze your bum and lift your hips until your body is a straight line. Lower slowly. Repeat.' },
+  { id: 'knee-to-chest', name: 'Knee to chest', kind: 'static', pos: 'floor', areas: ['lowerBack', 'hips'], photo: 'One_Knee_To_Chest', secs: 30, sides: true,
+    how: 'Lie on your back. Hug one knee towards your chest, the other leg long on the floor. Let your lower back relax into the floor.' },
   { id: 'figure-4', name: 'Figure-4 stretch', kind: 'static', pos: 'floor', desk: 'seated-figure-4', areas: ['hips', 'lowerBack'], photo: 'Ankle_On_The_Knee', secs: 30, sides: true,
     how: 'Lie on your back, knees bent. Cross one ankle over the other knee, hold the bottom thigh and pull both legs towards you.' },
   { id: 'lying-twist', name: 'Lying twist', kind: 'static', pos: 'floor', areas: ['lowerBack', 'hips'], photo: 'Knee_Across_The_Body', secs: 30, sides: true,
     how: 'Lie on your back, legs straight. Bend one knee and let it fall across your body, shoulders stay down. Look the other way.' },
+  { id: 'happy-baby', name: 'Happy baby', kind: 'static', pos: 'floor', areas: ['hips', 'lowerBack'], photo: 'drawing', secs: 30,
+    how: 'Lie on your back, knees wide towards your armpits. Hold your feet (or ankles), soles to the ceiling. Rock gently side to side if it feels good.' },
   { id: 'hamstring', name: 'Lying hamstring stretch', kind: 'static', pos: 'floor', desk: 'seated-hamstring', areas: ['legs', 'lowerBack'], photo: 'Leg-Up_Hamstring_Stretch', secs: 30, sides: true,
     how: 'Lie on your back. Hold behind one thigh and straighten that leg towards the ceiling. Keep the other leg relaxed on the floor.' },
   { id: 'legs-up-wall', name: 'Legs up the wall', kind: 'static', pos: 'floor', areas: ['legs', 'lowerBack'], photo: 'drawing', secs: 60,
     how: 'Lie with your bum near a wall and rest your legs up it. Arms relaxed. Slow your breathing.' },
+  { id: 'savasana', name: 'Savasana (rest)', kind: 'breath', pos: 'floor', desk: 'breathing', areas: [], photo: 'drawing', still: true, secs: 60,
+    how: 'Lie on your back, arms by your sides, palms up. Let your whole body go heavy. Just breathe.' },
 ];
 
 const AREAS = [
@@ -103,8 +127,8 @@ const AREAS = [
 ];
 
 const PLACES = [
-  { id: 'desk', name: 'At my desk', note: 'Chair and standing, no floor' },
-  { id: 'home', name: 'At home', note: 'Floor is fine' },
+  { id: 'desk', name: 'No floor', note: 'At the desk or outside: chair and standing' },
+  { id: 'home', name: 'Floor is fine', note: 'At home, with room to lie down' },
 ];
 
 const POSITIONS = { chair: 'Chair', standing: 'Standing', floor: 'Floor' };
@@ -112,15 +136,25 @@ const POSITIONS = { chair: 'Chair', standing: 'Standing', floor: 'Floor' };
 // Each goal lists stretches by priority (most important first).
 // At the desk, floor stretches turn into their stand-ins (see forPlace).
 // "filler" pads the routine to the chosen length.
+// "ending" always closes the routine from 5 minutes up (extra time goes into it).
 // anyPlace: the goal is the same wherever you are (no place choice).
 const GOALS = [
+  // Dynamic only: long static holds right before running can briefly reduce power.
   { id: 'run', name: 'Warm up for a run', note: 'Moving stretches only', filler: 'march', anyPlace: true,
-    stretches: ['leg-swings', 'hip-circles', 'walking-lunges', 'side-leg-swings', 'ankle-circles', 'high-knees', 'butt-kicks', 'arm-circles'] },
-  { id: 'winddown', name: 'Wind down', note: 'Slow holds and breathing', filler: 'breathing',
-    stretches: ['childs-pose', 'lying-twist', 'figure-4', 'side-neck', 'legs-up-wall', 'cat-cow', 'hamstring', 'chest-opener', 'open-book'] },
+    stretches: ['leg-swings', 'walking-lunges', 'worlds-greatest', 'hip-circles', 'side-leg-swings', 'high-knees', 'butt-kicks', 'inchworm', 'ankle-circles', 'arm-circles'] },
+  // After the run is when static holds belong: calves, quads, hamstrings, hip flexors, glutes.
+  { id: 'afterrun', name: 'After a run', note: 'Cool-down holds for legs and hips', filler: 'breathing',
+    stretches: ['calf', 'quad-standing', 'standing-hamstring', 'hip-flexor', 'figure-4', 'lying-twist', 'legs-up-wall', 'knee-to-chest', 'childs-pose', 'happy-baby'] },
+  // The poses most beginner classes are built on, always ending in savasana (from 5 min).
+  { id: 'yoga', name: 'Beginner yoga', note: 'Basic poses, ends in rest', filler: 'savasana', ending: 'savasana',
+    stretches: ['downward-dog', 'cat-cow', 'warrior-2', 'childs-pose', 'hip-flexor', 'forward-fold', 'sphinx', 'glute-bridge', 'lying-twist', 'happy-baby', 'figure-4'] },
+  { id: 'morning', name: 'Morning wake-up', note: 'Gentle moves to start the day', filler: 'march',
+    stretches: ['cat-cow', 'worlds-greatest', 'shoulder-rolls', 'forward-fold', 'seated-side-bend', 'chest-opener', 'hip-circles', 'downward-dog', 'glute-bridge', 'arm-circles'] },
+  { id: 'winddown', name: 'Wind down', note: 'Slow holds and breathing', filler: 'breathing', ending: 'savasana',
+    stretches: ['childs-pose', 'lying-twist', 'figure-4', 'side-neck', 'legs-up-wall', 'cat-cow', 'happy-baby', 'hamstring', 'chest-opener', 'open-book'] },
   // Movement first: breaking up sitting matters more than any single stretch.
   { id: 'sitting', name: 'Sitting too much', note: 'Get moving, open hips and chest', filler: 'breathing',
-    stretches: ['glute-bridge', 'hip-flexor', 'chin-tucks', 'w-squeeze', 'chest-opener', 'open-book', 'sphinx', 'cat-cow', 'side-neck', 'figure-4', 'wrist-stretch', 'hamstring', 'shoulder-rolls'] },
+    stretches: ['glute-bridge', 'hip-flexor', 'chin-tucks', 'w-squeeze', 'chest-opener', 'eye-break', 'downward-dog', 'open-book', 'sphinx', 'cat-cow', 'side-neck', 'figure-4', 'wrist-stretch', 'hamstring', 'shoulder-rolls'] },
   { id: 'daily', name: 'Daily stretch', note: 'Balanced full body', filler: 'breathing',
     stretches: ['cat-cow', 'hip-flexor', 'side-neck', 'chest-opener', 'hamstring', 'figure-4', 'open-book', 'childs-pose', 'calf', 'lying-twist', 'shoulder-rolls', 'chin-tucks'] },
 ];
@@ -165,13 +199,14 @@ function stretchSecs(s) {
 function buildRoutine({ goal, areas = [], minutes, place = 'home' }) {
   const target = minutes * 60;
   if (!usesPlace(goal)) place = 'home';
-  let primary, secondary, filler;
+  let primary, secondary, filler, ending = null;
 
   if (goal) {
     const g = goalById(goal);
     primary = forPlace(g.stretches.map(byId), place);
     secondary = [];
-    filler = byId(g.filler);
+    filler = forPlace([byId(g.filler)], place)[0];
+    ending = g.ending && minutes >= 5 ? forPlace([byId(g.ending)], place)[0] : null;
   } else {
     const matches = s => s.kind !== 'warmup' && s.kind !== 'breath' && s.areas.some(a => areas.includes(a));
     primary = forPlace(STRETCHES.filter(matches), place);
@@ -181,7 +216,7 @@ function buildRoutine({ goal, areas = [], minutes, place = 'home' }) {
   }
 
   const picked = []; // { stretch, round }
-  let total = 0;
+  let total = ending ? stretchSecs(ending) : 0; // the ending's time is set aside up front
   let floorPicked = false; // the first floor stretch gets a longer prep
   for (let round = 1; round <= MAX_ROUNDS && total < target - TOLERANCE; round++) {
     const pool = round === 1 ? primary.concat(secondary) : primary;
@@ -202,7 +237,9 @@ function buildRoutine({ goal, areas = [], minutes, place = 'home' }) {
   // Pad with the filler if we're still short. It opens the routine, except breathing at home,
   // which makes a calm finish (lying down, if you ended on the floor).
   const gap = target - total;
-  if (gap > TOLERANCE) {
+  if (ending) {
+    picked.push({ stretch: ending, round: 1, secs: ending.secs + Math.max(0, gap) });
+  } else if (gap > TOLERANCE) {
     const pad = { stretch: filler, round: 1, secs: gap - PREP_SECS };
     if (place === 'home' && filler.kind === 'breath') picked.push(pad);
     else picked.unshift(pad);
