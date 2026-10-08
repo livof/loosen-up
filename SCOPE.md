@@ -125,3 +125,61 @@ Added because I'm very visual and want to see how each stretch is done.
 
 The v1 "later" list still applies: keeping the screen awake, history, reminders, voice, custom
 routines, other languages and a body map.
+
+---
+
+# v3: Desk or home
+
+Added because most people who sit too much are at the office, where floor stretches don't work.
+The old "Sitting too much" routine put you on the floor (kneeling, lying down) from the 2-minute
+version up, and the body-area picker did the same.
+
+## What's in v3
+
+- **"Where are you?"**: *At my desk* (chair and standing, no floor) or *At home* (floor is fine).
+  Remembered on the device; desk is the default, since a desk routine works anywhere.
+  Hidden for the run warm-up, which is the same everywhere.
+- Every stretch has a **position**: chair, standing or floor. It's shown in the routine preview.
+- **Desk stand-ins**: at the desk, each floor stretch turns into a chair or standing version,
+  or drops out. This keeps one list per goal and also fixes the area picker.
+
+  | Floor | At the desk |
+  |---|---|
+  | Kneeling hip flexor | Standing hip flexor |
+  | Figure-4 | Seated figure-4 |
+  | Lying hamstring | Seated hamstring |
+  | Cat–cow | Seated cat–cow |
+  | Open book | Seated twist |
+  | Glute bridge | Chair squats |
+  | Sphinx | Standing back extension |
+  | Child's pose, lying twist, legs up the wall | (left out) |
+
+  At home, the desk stand-ins are left out, since the floor version is there.
+- **Routines are grouped by position** (chair → standing → floor), so you go down to the floor
+  once and stay there. The first floor stretch gets a 10-second "Get ready: down to the floor".
+- **"Sitting too much" is movement first.** The evidence is stronger for breaking up sitting
+  with movement than for any one stretch ("the best posture is the next posture").
+  At the desk, 2 min = chin tucks, chair squats, standing hip flexor.
+  It also adds "wake-up" moves for the glutes and mid-back (chair squats / glute bridge, W squeeze).
+  These are activation, not real strength training, and the app doesn't claim more.
+- **New stretches**: standing hip flexor, chair squats, seated figure-4, seated hamstring,
+  seated cat–cow, seated side bend, W squeeze, wrist and forearm stretch, glute bridge, sphinx.
+- **New area: Wrists & arms**, for keyboard and mouse users.
+- **At the desk, lengths are 2 / 5 / 10 min.** Nobody does 15 minutes at their desk.
+- At home, the breathing filler plays **last** (a calm finish); at the desk it plays first.
+- Texts no longer say "hold a chair" for balance (office chairs roll), and the calf stretch
+  can use the desk.
+- "Watch a video" searches for "… exercise" for moving items, "… stretch" for holds.
+
+## Decisions
+
+- Child's pose stays out of "Sitting too much": it repeats the rounded shape of sitting.
+  It's still in Wind down.
+- Thread the needle was left out: open book already covers upper-back rotation at home.
+- Doorway chest stretch was not brought back: open-plan offices often have no free door,
+  and the chest opener works anywhere.
+
+## Still out of scope
+
+Break reminders ("time for a 2-min desk break") are the next most useful thing for office use,
+but still out of scope, along with the rest of the v1 "later" list.

@@ -17,6 +17,18 @@ function stander({ farLeg, nearLeg, farArm, nearArm, lean = 0 }) {
     line([hip, sh], false) + head(150 + lean * 1.3, 44) +
     line([hip, ...nearLeg], false) + line([sh, ...nearArm], false);
 }
+// Side view, sitting on a chair, facing right. spine: points from the hip up to the shoulder.
+const CHAIR = '#b9b0a3';
+const chair = `<rect x="106" y="128" width="64" height="7" rx="3" fill="${CHAIR}"/>` +
+  `<rect x="106" y="70" width="7" height="112" rx="3" fill="${CHAIR}"/><rect x="163" y="128" width="7" height="54" rx="3" fill="${CHAIR}"/>`;
+const hipS = [138, 122];
+const sitLeg = [[182, 124], [184, 180]];
+function sitter({ spine = [[140, 76]], headAt = [142, 54], farLeg = sitLeg, nearLeg = sitLeg, farArm, nearArm }) {
+  const sh = spine[spine.length - 1];
+  return chair + line([hipS, ...farLeg], true) + line([sh, ...farArm], true) +
+    line([hipS, ...spine], false) + head(...headAt) + line([hipS, ...nearLeg], false) + line([sh, ...nearArm], false);
+}
+
 const standLeg = [[150, 148], [150, 180]];
 const toeLeg = [[152, 148], [156, 178]];
 
@@ -65,6 +77,38 @@ const drawings = {
     return wall + line([[214, 168], [224, 104], [226, 40]], false) + line([[100, 168], [214, 168]], false) +
       head(74, 166) + arms;
   }),
+  // Ankle on the other knee, then lean forward from the hips with a long back.
+  'seated-figure-4': [0, 1].map(f => {
+    const crossed = [[176, 102], [190, 122]];
+    return f
+      ? sitter({ spine: [[166, 86]], headAt: [180, 68], nearLeg: crossed, farArm: [[176, 104], [184, 118]], nearArm: [[180, 102], [186, 112]] })
+      : sitter({ nearLeg: crossed, farArm: [[156, 100], [176, 110]], nearArm: [[160, 98], [180, 104]] }) + arrow(160, 40, 186, 54);
+  }),
+  // One leg straight out, heel on the floor, toes up. Lean forward from the hips.
+  'seated-hamstring': [0, 1].map(f => {
+    const straight = [[180, 128], [232, 176], [238, 160]];
+    return f
+      ? sitter({ spine: [[168, 88]], headAt: [182, 70], nearLeg: straight, farArm: [[184, 112], [196, 132]], nearArm: [[188, 110], [202, 136]] })
+      : sitter({ nearLeg: straight, farArm: [[150, 100], [168, 118]], nearArm: [[154, 98], [174, 120]] }) + arrow(160, 40, 186, 54);
+  }),
+  // Hands on knees. Arch and look up (cow), then round and look down (cat).
+  'seated-cat-cow': [0, 1].map(f => f
+    ? sitter({ spine: [[122, 100], [138, 74]], headAt: [160, 80], farArm: [[166, 104], [178, 122]], nearArm: [[170, 104], [182, 122]] })
+    : sitter({ spine: [[134, 98], [146, 76]], headAt: [156, 54], farArm: [[164, 98], [178, 122]], nearArm: [[168, 98], [182, 122]] })),
+  // Arms bent in front, then pull the elbows down and back to squeeze the shoulder blades.
+  'w-squeeze': [0, 1].map(f => f
+    ? sitter({ farArm: [[122, 104], [130, 72]], nearArm: [[118, 106], [124, 72]] })
+    : sitter({ farArm: [[172, 88], [178, 56]], nearArm: [[178, 90], [186, 58]] }) + arrow(206, 30, 160, 30)),
+  // Arm straight out. The other hand pulls the fingers down, then back.
+  'wrist-stretch': [0, 1].map(f => f
+    ? sitter({ farArm: [[168, 92], [198, 66]], nearArm: [[192, 80], [200, 62]] })
+    : sitter({ farArm: [[166, 98], [196, 96]], nearArm: [[192, 80], [198, 98]] })),
+  // Face down, then lift the chest onto the forearms. Hips stay on the floor.
+  sphinx: [0, 1].map(f => f
+    ? line([[112, 136], [112, 175], [78, 176]], true) + line([[262, 176], [178, 174], [112, 136]], false) + head(92, 118) +
+      line([[112, 136], [116, 175], [82, 176]], false)
+    : line([[262, 176], [178, 174], [104, 172]], false) + head(84, 160) + line([[104, 172], [100, 176], [70, 177]], false) +
+      arrow(130, 150, 130, 118)),
 };
 
 for (const [id, frames] of Object.entries(drawings)) {

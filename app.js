@@ -3,7 +3,11 @@
 const $ = id => document.getElementById(id);
 
 // ---------- Home: choices ----------
-const choice = { goal: null, areas: [], minutes: 5 };
+// The place is remembered on this device. Desk is the default: a desk routine works anywhere.
+function savedPlace() {
+  try { return localStorage.getItem('place') === 'home' ? 'home' : 'desk'; } catch (e) { return 'desk'; }
+}
+const choice = { goal: null, areas: [], minutes: 5, place: savedPlace() };
 
 function makeButton(html, onClick) {
   const b = document.createElement('button');
@@ -34,6 +38,16 @@ AREAS.forEach(a => {
   $('areas').append(b);
 });
 
+PLACES.forEach(p => {
+  const b = makeButton(`${p.name}<small>${p.note}</small>`, () => {
+    choice.place = p.id;
+    try { localStorage.setItem('place', p.id); } catch (e) { /* not saved, still works */ }
+    renderHome();
+  });
+  b.dataset.place = p.id;
+  $('places').append(b);
+});
+
 LENGTHS.forEach(m => {
   const b = makeButton(`${m} min`, () => {
     choice.minutes = m;
@@ -50,7 +64,8 @@ function photoSrc(s, frame) {
 }
 
 function videoUrl(s) {
-  return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(`how to do ${s.name} stretch`);
+  const word = s.kind === 'static' ? 'stretch' : 'exercise';
+  return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(`how to do ${s.name} ${word}`);
 }
 
 function hasChoice() {
@@ -67,8 +82,17 @@ function renderHome() {
     b.setAttribute('aria-pressed', b.dataset.goal === choice.goal));
   document.querySelectorAll('[data-area]').forEach(b =>
     b.setAttribute('aria-pressed', choice.areas.includes(b.dataset.area)));
-  document.querySelectorAll('[data-minutes]').forEach(b =>
-    b.setAttribute('aria-pressed', Number(b.dataset.minutes) === choice.minutes));
+  document.querySelectorAll('[data-place]').forEach(b =>
+    b.setAttribute('aria-pressed', b.dataset.place === choice.place));
+  $('place-section').hidden = !usesPlace(choice.goal);
+
+  // At the desk there's no 15-minute option; fall back to the longest one left.
+  const lengths = lengthsFor(choice);
+  if (!lengths.includes(choice.minutes)) choice.minutes = lengths[lengths.length - 1];
+  document.querySelectorAll('[data-minutes]').forEach(b => {
+    b.hidden = !lengths.includes(Number(b.dataset.minutes));
+    b.setAttribute('aria-pressed', Number(b.dataset.minutes) === choice.minutes);
+  });
 
   $('start').disabled = !hasChoice();
   if (!hasChoice()) {
@@ -78,7 +102,7 @@ function renderHome() {
   const r = buildRoutine(choice);
   const items = r.stretches.map(s => {
     const thumb = s.photo ? `<img src="${photoSrc(s, 1)}" alt="" loading="lazy">` : '<span class="no-photo"></span>';
-    return `<li>${thumb}<span>${s.name}</span></li>`;
+    return `<li>${thumb}<span>${s.name}<small>${POSITIONS[s.pos]}</small></span></li>`;
   }).join('');
   $('preview').innerHTML =
     `<strong>${r.stretches.length} stretches · ${formatTime(r.total)}</strong><ol>${items}</ol>`;
@@ -206,7 +230,8 @@ function renderStep() {
   const step = routine.steps[stepIndex];
   const s = step.stretch;
   $('count').textContent = `Stretch ${step.index + 1} of ${routine.stretches.length}`;
-  $('phase').textContent = step.phase === 'prep' ? 'Get ready' : step.phase;
+  $('phase').textContent = step.phase !== 'prep' ? step.phase
+    : step.toFloor ? 'Get ready: down to the floor' : 'Get ready';
   $('name').textContent = s.name;
   $('how').textContent = s.how;
   $('video').href = videoUrl(s);

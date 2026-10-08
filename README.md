@@ -1,6 +1,6 @@
 # Loosen Up
 
-A guided stretch timer. Pick what you need (a goal or body areas), pick 2 / 5 / 10 / 15 minutes, press start and follow along.
+A guided stretch timer. Pick what you need (a goal or body areas), where you are (at your desk or at home), pick 2 / 5 / 10 / 15 minutes, press start and follow along.
 
 **Live:** https://livof.github.io/loosen-up/
 
@@ -28,7 +28,11 @@ node test.js
 
 ## Add or change a stretch
 
-Edit `STRETCHES` in `routines.js`. The order of that list is the order stretches play in.
+Edit `STRETCHES` in `routines.js`. The order of that list is the order stretches play in,
+and it must stay grouped by position: chair, then standing, then floor.
+Every stretch needs a `pos` (`chair`, `standing` or `floor`).
+A floor stretch can name a `desk` stand-in (a chair or standing version used at the desk);
+without one it's left out at the desk. Mark a stand-in `deskOnly: true` if it shouldn't show up at home.
 To use it in a goal, add its `id` to that goal's `stretches` list (most important first).
 Every stretch needs a picture: add `img/<id>-0.jpg` (start) and `img/<id>-1.jpg` (end) and set `photo` to the source name,
 or draw it in `tools/draw-figures.js` and set `photo: 'drawing'`.
